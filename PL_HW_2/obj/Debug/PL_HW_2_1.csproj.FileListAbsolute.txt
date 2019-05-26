@@ -1,0 +1,11 @@
+D:\projects\C#\PL_HW_2\PL_HW_2\bin\Debug\PL_HW_2.exe.config
+D:\projects\C#\PL_HW_2\PL_HW_2\bin\Debug\PL_HW_2.exe
+D:\projects\C#\PL_HW_2\PL_HW_2\bin\Debug\PL_HW_2.pdb
+D:\projects\C#\PL_HW_2\PL_HW_2\obj\Debug\PL_HW_2_1.csprojAssemblyReference.cache
+D:\projects\C#\PL_HW_2\PL_HW_2\obj\Debug\PL_HW_2.Properties.Resources.resources
+D:\projects\C#\PL_HW_2\PL_HW_2\obj\Debug\PL_HW_2_1.csproj.GenerateResource.cache
+D:\projects\C#\PL_HW_2\PL_HW_2\obj\Debug\PL_HW_2_1.csproj.CoreCompileInputs.cache
+D:\projects\C#\PL_HW_2\PL_HW_2\obj\Debug\PL_HW_2.exe
+D:\projects\C#\PL_HW_2\PL_HW_2\obj\Debug\PL_HW_2.pdb
+D:\projects\C#\PL_HW_2\PL_HW_2\obj\Debug\PL_HW_2.MainForm.resources
+D:\projects\C#\PL_HW_2\PL_HW_2\obj\Debug\PL_HW_2.LoggerForm.resources
