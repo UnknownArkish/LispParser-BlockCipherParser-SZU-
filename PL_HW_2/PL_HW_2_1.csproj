@@ -64,6 +64,8 @@
     <Compile Include="Framework\Controller.cs" />
     <Compile Include="Framework\Model.cs" />
     <Compile Include="Framework\MVC.cs" />
+    <Compile Include="LispParser\LispAtom.cs" />
+    <Compile Include="LispParser\LispParser.cs" />
     <Compile Include="Model\LoggerModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProgramController.cs" />

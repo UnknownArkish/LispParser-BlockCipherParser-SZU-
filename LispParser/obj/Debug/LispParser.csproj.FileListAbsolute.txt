@@ -1,0 +1,7 @@
+D:\projects\C#\PL_HW_2\LispParser\bin\Debug\LispParser.exe.config
+D:\projects\C#\PL_HW_2\LispParser\bin\Debug\LispParser.exe
+D:\projects\C#\PL_HW_2\LispParser\bin\Debug\LispParser.pdb
+D:\projects\C#\PL_HW_2\LispParser\obj\Debug\LispParser.csprojAssemblyReference.cache
+D:\projects\C#\PL_HW_2\LispParser\obj\Debug\LispParser.csproj.CoreCompileInputs.cache
+D:\projects\C#\PL_HW_2\LispParser\obj\Debug\LispParser.exe
+D:\projects\C#\PL_HW_2\LispParser\obj\Debug\LispParser.pdb
