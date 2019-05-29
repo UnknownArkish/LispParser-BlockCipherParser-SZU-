@@ -21,7 +21,7 @@ namespace LispParser
             {
                 if (args[1].Contains("lambda"))
                 {
-                    LispAtom lambda = ParseList(args[1]) as LambdaAtom;
+                    LispAtom lambda = Parser.ParseFunc(args[1]);
                     Parser.AtomStorage.RegisterAtom(args[0], lambda);
                     return null;
                 }

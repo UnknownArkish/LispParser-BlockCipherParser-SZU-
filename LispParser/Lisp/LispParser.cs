@@ -29,24 +29,58 @@ namespace LispParser
         /// <param name="list"></param>
         public object ParseList(string list)
         {
-            string key = list;
-            if (!LispUtil.IsAtom(list))
-            {
-                list = LispUtil.RemoveBracket(list);
-                key = LispUtil.SplitArg(list);
-            }
-            LispAtom func = null;
+            list = LispUtil.RemoveBracket(list);
+            string key = ParserFuncKey(list);
+            LispAtom func = ParseFunc(list);
+            if (func == null) return list;
             if (key.Contains("lambda"))
             {
-                func = new LambdaAtomFactory(this).Run(list) as LambdaAtom;
                 return func;
             }
             else
             {
-                func = AtomStorage[key];
+                return func.Run(list);
             }
-            if (func == null) return key;
-            return func.Run(list);
+            //string key = list;
+            //if (!LispUtil.IsAtom(list))
+            //{
+            //    list = LispUtil.RemoveBracket(list);
+            //    key = LispUtil.SplitArg(list);
+            //}
+            //LispAtom func = null;
+            //if (key.Contains("lambda"))
+            //{
+            //    func = new LambdaAtomFactory(this).Run(list) as LambdaAtom;
+            //    return func;
+            //}
+            //else
+            //{
+            //    func = AtomStorage[key];
+            //}
+            //if (func == null) return key;
+            //return func.Run(list);
+        }
+
+        public string ParserFuncKey(string list)
+        {
+            list = LispUtil.RemoveBracket(list);
+            return LispUtil.SplitArg(list);
+        }
+
+        public LispAtom ParseFunc(string list)
+        {
+            list = LispUtil.RemoveBracket(list);
+            string key = ParserFuncKey(list);
+            LispAtom result = null;
+            if (key.Contains("lambda"))
+            {
+                result = new LambdaAtomFactory(this).Run(list) as LambdaAtom;
+            }
+            else
+            {
+                result = AtomStorage[key];
+            }
+            return result;
         }
     }
 }

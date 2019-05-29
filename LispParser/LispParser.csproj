@@ -46,6 +46,7 @@
     <Compile Include="Lisp\AtomStorage.cs" />
     <Compile Include="Lisp\Atom\Func\DefineAtom.cs" />
     <Compile Include="Lisp\Atom\Func\LambdaAtom.cs" />
+    <Compile Include="Lisp\Atom\Func\LambdaAtomFactory.cs" />
     <Compile Include="Lisp\Atom\Operator\AddAtom.cs" />
     <Compile Include="Lisp\Atom\LispAtom.cs" />
     <Compile Include="Lisp\Atom\Number\IntAtom.cs" />
