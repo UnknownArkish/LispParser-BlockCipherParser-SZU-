@@ -13,7 +13,12 @@ public class IntAtom : BaseAtom
         Number = number;
     }
 
-    protected override object Handle(Template operand, params object[] args)
+    protected override BaseAtom Handle(Template operand)
+    {
+        return this;
+    }
+
+    public override object GetResult()
     {
         return Number;
     }

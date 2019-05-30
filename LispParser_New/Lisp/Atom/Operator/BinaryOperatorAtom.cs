@@ -4,19 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <summary>
+/// 双元操作符Atom基类，仅对Template进行解析得到IntAtom的结果
+/// 由子类决定如何进行计算
+/// </summary>
 public abstract class BinaryOperatorAtom : BaseAtom
 {
     public BinaryOperatorAtom(LispParser parser) : base(parser, "(x y)", "(operator x y)")
     {
     }
 
-    protected override object Handle(Template operand, params object[] args)
+    protected override BaseAtom Handle(Template operand)
     {
-        object[] templateResults = ParseTemplateAll();
-        return Calculate(templateResults[0] as string, templateResults[1] as string);
+        BaseAtom[] templateResults = ParseTemplateAll();
+        int result = Calculate(int.Parse(templateResults[0].GetResult() as string), int.Parse(templateResults[1].GetResult() as string));
+        return Parser.AtomStorage[result.ToString()];
     }
 
-    protected abstract object Calculate(string op1, string op2);
+    /// <summary>
+    /// 计算op1和op2的结果，由自类具体实现
+    /// </summary>
+    protected abstract int Calculate(int op1, int op2);
 
-
+    public override object GetResult()
+    {
+        return "BinaryOperatorAtom";
+    }
 }

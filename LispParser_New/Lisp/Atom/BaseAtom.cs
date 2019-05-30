@@ -60,7 +60,7 @@ public abstract class BaseAtom
     /// <summary>
     /// 操作数Template
     /// </summary>
-    private Template m_Operator;
+    protected Template m_Operator;
     /// <summary>
     /// Template字典
     /// </summary>
@@ -71,10 +71,6 @@ public abstract class BaseAtom
     public Template[] Templates { get { return m_TemplateDict.Values.ToArray(); } }
 
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="parser"></param>
     /// <param name="signalsStr">形如(x y)</param>
     /// <param name="templateStr">形如(??? x y)</param>
     public BaseAtom(LispParser parser, string signalsStr, string templateStr)
@@ -134,12 +130,12 @@ public abstract class BaseAtom
     }
 
 
-    public object Run(string list)
+    public virtual BaseAtom Run(string list)
     {
         // @TODO: 解析list中的参数
         string[] args = GetArgs(list);
-        // 对所有的arg进行一次ParseList
-
+        // 先对args进行绑定，因为可能args中有些东西已经被定义过了
+        BindingArgs(args);
         // @TODO: 对SignalsDict进行Signal的BindingValue进行绑定
         BindingSignalValue(args);
         // @TODO：向RuntimeAtomStack注册此Atom
@@ -150,14 +146,32 @@ public abstract class BaseAtom
         Parser.RuntimeAtomStack.RegisterAtom(this);
 
         // 将所有的templateResult交给具体自类处理
-        object result = this.Handle(m_Operator);
+        BaseAtom result = this.Handle(m_Operator);
         // @TODO：向RuntimeAtomStack取消注册此Atom
         Parser.RuntimeAtomStack.Unregister(this);
 
         return result;
     }
 
-    protected abstract object Handle(Template operand, params object[] args);
+    /// <summary>
+    /// 
+    /// </summary>
+    protected abstract BaseAtom Handle(Template operand);
+    public abstract object GetResult();
+
+    public void BindingArgs(string[] args)
+    {
+        for( int i = 0; i < args.Length; i++)
+        {
+            if( LispUtil.IsAtom(args[i]))
+            {
+                // @TODO：先从RuntimeStack中取出数值
+                string temp = Parser.RuntimeAtomStack.GetSignalValue(args[i]);
+                // @TODO：如果为null，再从AtomStorage中取出数值
+                if (temp != null) args[i] = temp;
+            }
+        }
+    }
 
     /// <summary>
     /// 绑定Signal
@@ -195,20 +209,16 @@ public abstract class BaseAtom
     /// <summary>
     /// 解析指定的已绑定Value的Template
     /// </summary>
-    protected object ParseTemplate(Template template)
+    protected BaseAtom ParseTemplate(Template template)
     {
-        object result = template.BindingValue;
+        BaseAtom result = null;
         if (LispUtil.IsAtom(template.BindingValue))
         {
-            BaseAtom atom = Parser.AtomStorage[template.BindingValue];
-            if (atom != null)
-            {
-                result = atom.Run(template.BindingValue);
-            }
+            result = Parser.AtomStorage[template.BindingValue];
         }
         else
         {
-            result = Parser.ParserList(template.BindingValue);
+            result = Parser.ParseAndGetAtom(template.BindingValue);
         }
         return result;
     }
@@ -216,9 +226,9 @@ public abstract class BaseAtom
     /// 解析所有的已绑定的Template
     /// </summary>
     /// <returns></returns>
-    protected object[] ParseTemplateAll()
+    protected BaseAtom[] ParseTemplateAll()
     {
-        object[] results = new object[Templates.Length];
+        BaseAtom[] results = new BaseAtom[Templates.Length];
         for (int i = 0; i < Templates.Length; i++)
         {
             results[i] = ParseTemplate(Templates[i]);
@@ -227,7 +237,7 @@ public abstract class BaseAtom
     }
 
 
-    private string[] GetArgs(string list)
+    protected string[] GetArgs(string list)
     {
         string[] args = LispUtil.SplitInAtom(list, SignalNum + 1);
         string[] result = new string[SignalNum];

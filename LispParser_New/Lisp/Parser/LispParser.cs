@@ -16,24 +16,25 @@ public class LispParser
     {
         AtomStorage = new AtomStorage(this);
         RuntimeAtomStack = new RuntimeAtomStack(this);
-
-
-        //BaseAtom addAtom = AtomStorage["+"];
-        //Console.WriteLine(addAtom.Run("+ 2 3"));
-
-        //BaseAtom defineAtom = AtomStorage["define"];
-        //defineAtom.Run("define add +");
-
-        //BaseAtom one = AtomStorage["1"];
-        //Console.WriteLine(one.Run("1 2 3"));
     }
 
-    public object ParserList(string list)
+    /// <summary>
+    /// 解析并得到结果
+    /// </summary>
+    public object ParseAndGetResult(string list)
+    {
+        return ParseAndGetAtom(list).GetResult();
+    }
+
+    /// <summary>
+    /// 解析得到一个原子
+    /// </summary>
+    public BaseAtom ParseAndGetAtom(string list)
     {
         if (LispUtil.IsAtom(list))
         {
             BaseAtom atom = AtomStorage[list];
-            return atom.Run(list);
+            return atom;
         }
         else
         {

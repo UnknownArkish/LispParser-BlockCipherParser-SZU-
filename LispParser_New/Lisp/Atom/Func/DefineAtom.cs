@@ -10,29 +10,28 @@ public class DefineAtom : BaseAtom
     {
     }
 
-    protected override object Handle(Template operand, params object[] args)
+    public override object GetResult()
+    {
+        return "DefineAtom";
+    }
+
+    protected override BaseAtom Handle(Template operand)
     {
         string key = Templates[0].BindingValue;
         string defineFrom = Templates[1].BindingValue;
 
+        BaseAtom defineFromAtom = null;
         if (!LispUtil.IsAtom(defineFrom))
         {
             // 如果不是原子，说明defineFrom是一个lambda表达式
             // 则调用Parser的ParseList函数，得到一个BaseAtom
-            object atomResult = Parser.ParserList(defineFrom);
-            if (defineFrom.Contains("lambda"))
-            {
-
-            }
-            else
-            {
-                Parser.AtomStorage.Define(key, atomResult as string);
-            }
+            defineFromAtom = Parser.ParseAndGetAtom(defineFrom);
         }
         else
         {
-            Parser.AtomStorage.Define(key, defineFrom);
+            defineFromAtom = Parser.AtomStorage[defineFrom];
         }
-        return "define";
+        Parser.AtomStorage.RegisterAtom(key, defineFromAtom);
+        return this;
     }
 }

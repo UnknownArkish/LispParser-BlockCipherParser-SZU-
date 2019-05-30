@@ -38,6 +38,10 @@ public class AtomStorage
             {
                 result = m_AtomDict[key];
             }
+            if( result == null && CheckIsLambdaAtom(key))
+            {
+                result = m_AtomDict["LambdaFactory"];
+            }
             return result;
         }
     }
@@ -69,12 +73,30 @@ public class AtomStorage
 
     private void InitAtomStorage()
     {
-        m_AtomDict = new Dictionary<string, BaseAtom>();
+        m_AtomDict = new Dictionary<string, BaseAtom>
+        {
+            ["+"] = new AddAtom(Parser),
+            ["-"] = new ReduceAtom(Parser),
+            ["*"] = new MultiplyAtom(Parser),
+            ["/"] = new DivideAtom(Parser),
 
-        BaseAtom addAtom = new AddAtom(Parser);
-        m_AtomDict["+"] = addAtom;
+            ["define"] = new DefineAtom(Parser),
+            ["LambdaFactory"] = new LambdaAtomFactory(Parser)
+        };
+    }
 
-        m_AtomDict["define"] = new DefineAtom(Parser);
+    /// <summary>
+    /// 检查是否含有lambda表达式
+    /// </summary>
+    private bool CheckIsLambdaAtom(string key)
+    {
+        if (!LispUtil.IsAtom(key))
+        {
+            key = LispUtil.RemoveBracket(key);
+        }
+        string keyFirstArgs = LispUtil.SplitInAtom(key);
+        if (keyFirstArgs.Equals("lambda")) return true;
+        return false;
     }
 
 }
