@@ -43,11 +43,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Lisp\Atom\BaseAtom.cs" />
+    <Compile Include="Lisp\Atom\Func\DefineAtom.cs" />
+    <Compile Include="Lisp\Atom\Number\IntAtom.cs" />
+    <Compile Include="Lisp\Atom\Operator\AddAtom.cs" />
+    <Compile Include="Lisp\Atom\Operator\BinaryOperatorAtom.cs" />
+    <Compile Include="Lisp\Atom\ResultType.cs" />
+    <Compile Include="Lisp\Parser\LispParser.cs" />
+    <Compile Include="Lisp\RuntimeComponent\AtomStorage.cs" />
+    <Compile Include="Lisp\RuntimeComponent\RuntimeAtomStack.cs" />
+    <Compile Include="Lisp\Uitl\LispUtil.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Lisp\Args\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,0 +1,7 @@
+D:\projects\C#\PL_HW_2\LispParser_New\bin\Debug\LispParser_New.exe.config
+D:\projects\C#\PL_HW_2\LispParser_New\bin\Debug\LispParser_New.exe
+D:\projects\C#\PL_HW_2\LispParser_New\bin\Debug\LispParser_New.pdb
+D:\projects\C#\PL_HW_2\LispParser_New\obj\Debug\LispParser_New.csprojAssemblyReference.cache
+D:\projects\C#\PL_HW_2\LispParser_New\obj\Debug\LispParser_New.csproj.CoreCompileInputs.cache
+D:\projects\C#\PL_HW_2\LispParser_New\obj\Debug\LispParser_New.exe
+D:\projects\C#\PL_HW_2\LispParser_New\obj\Debug\LispParser_New.pdb

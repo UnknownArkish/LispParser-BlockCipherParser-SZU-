@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PL_HW_2_1", "PL_HW_2\PL_HW_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LispParser", "LispParser\LispParser.csproj", "{3352F2D4-6ECE-461F-A079-5143D750B62E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LispParser_New", "LispParser_New\LispParser_New.csproj", "{F4113A5C-C916-476F-B89E-CD40E9DF8AA6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{3352F2D4-6ECE-461F-A079-5143D750B62E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3352F2D4-6ECE-461F-A079-5143D750B62E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3352F2D4-6ECE-461F-A079-5143D750B62E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4113A5C-C916-476F-B89E-CD40E9DF8AA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4113A5C-C916-476F-B89E-CD40E9DF8AA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4113A5C-C916-476F-B89E-CD40E9DF8AA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4113A5C-C916-476F-B89E-CD40E9DF8AA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
