@@ -15,10 +15,11 @@ public class DefineAtom : BaseAtom
         return "DefineAtom";
     }
 
-    protected override BaseAtom Handle(Template operand)
+    public override BaseAtom Run(string list)
     {
-        string key = Templates[0].BindingValue;
-        string defineFrom = Templates[1].BindingValue;
+        string[] args = LispUtil.SplitInAtomAll(list);
+        string key = args[1];
+        string defineFrom = args[2];
 
         BaseAtom defineFromAtom = null;
         if (!LispUtil.IsAtom(defineFrom))
@@ -33,5 +34,10 @@ public class DefineAtom : BaseAtom
         }
         Parser.AtomStorage.RegisterAtom(key, defineFromAtom);
         return this;
+    }
+
+    protected override BaseAtom Handle(Template operand)
+    {
+        throw new NotImplementedException();
     }
 }

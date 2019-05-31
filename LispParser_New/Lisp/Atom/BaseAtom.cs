@@ -170,6 +170,7 @@ public abstract class BaseAtom
                 // @TODO：如果为null，再从AtomStorage中取出数值
                 if (temp != null) args[i] = temp;
             }
+            args[i] = Parser.ParseAndGetResult(args[i]) as string;
         }
     }
 
@@ -197,7 +198,7 @@ public abstract class BaseAtom
             if (LispUtil.IsAtom(toBindingValue))
             {
                 // 先从Atom调用栈中除去数值
-                string temp = Parser.RuntimeAtomStack.GetSignalValue(toBindingValue);
+                string temp = BindFromRuntimeStack(toBindingValue);
                 if (temp != null)
                 {
                     toBindingValue = temp;
@@ -206,6 +207,13 @@ public abstract class BaseAtom
             template.BindingValue = toBindingValue;
         }
     }
+
+    // 从动态运行栈中绑定
+    protected string BindFromRuntimeStack(string toBind)
+    {
+        return Parser.RuntimeAtomStack.GetSignalValue(toBind);
+    }
+
     /// <summary>
     /// 解析指定的已绑定Value的Template
     /// </summary>

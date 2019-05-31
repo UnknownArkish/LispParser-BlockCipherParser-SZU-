@@ -14,7 +14,7 @@ namespace LispParser_New
 
             LispParser parser = new LispParser();
             // 最普通的输出
-            Console.WriteLine(parser.ParseAndGetResult("(+ 2 3)"));
+            Console.WriteLine(parser.ParseAndGetResult("(+ (+ 2 3) 3)"));
 
             // lambda输出结果
             Console.WriteLine(parser.ParseAndGetResult("((lambda (x y z) (+ (+ x y) z)) 2 3 5)"));
@@ -29,6 +29,33 @@ namespace LispParser_New
 
             Console.WriteLine(parser.ParseAndGetResult("(add3 2 3 5)"));
             Console.WriteLine(parser.ParseAndGetResult("(add4 1 2 3 5)"));
+
+            // eq?函数
+            Console.WriteLine(parser.ParseAndGetResult("(eq? 1 1)"));
+            Console.WriteLine(parser.ParseAndGetResult("(eq? 4 (+ 1 2))"));
+            Console.WriteLine(parser.ParseAndGetResult("(eq? (eq? 1 2) False)"));
+
+            // cond函数
+            Console.WriteLine(parser.ParseAndGetResult("(" +
+                "(lambda (x) " +
+                    "(+ x " +
+                        "(cond ((eq? x 1) 1) (True 0))" +
+                    ")" +
+                ") " +
+                "2)"));
+            Console.WriteLine(parser.ParseAndGetResult("(define a 3)"));
+            Console.WriteLine(parser.ParseAndGetResult("(cond ((eq? a 2) 0) ((eq? a 3) 1) (True 2))"));
+
+            // fact
+            parser.ParseAndGetResult("(define fact " +
+                "(lambda (x) " +
+                    "(* x " +
+                        "(cond ((eq? x 1) 1) (True (fact (- x 1))))" +
+                    ")" +
+                ")" +
+            ")");
+            Console.WriteLine(parser.ParseAndGetResult("(fact 10)"));
+
 
             //parser.ParseAndGetResult("(define one (+ 0 1))");
             //parser.ParseAndGetResult("(define add +)");

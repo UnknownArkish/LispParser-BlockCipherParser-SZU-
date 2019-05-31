@@ -42,6 +42,10 @@ public class AtomStorage
             {
                 result = m_AtomDict["LambdaFactory"];
             }
+            if (result == null && CheckIsCond(key))
+            {
+                result = m_AtomDict["CondFactory"];
+            }
             return result;
         }
     }
@@ -80,8 +84,13 @@ public class AtomStorage
             ["*"] = new MultiplyAtom(Parser),
             ["/"] = new DivideAtom(Parser),
 
+            ["True"] = new TrueAtom(Parser),
+            ["False"] = new FalseAtom(Parser),
+
             ["define"] = new DefineAtom(Parser),
-            ["LambdaFactory"] = new LambdaAtomFactory(Parser)
+            ["LambdaFactory"] = new LambdaAtomFactory(Parser),
+            ["eq?"] = new EqualAtom(Parser),
+            ["CondFactory"] = new CondAtom(Parser),
         };
     }
 
@@ -96,6 +105,15 @@ public class AtomStorage
         }
         string keyFirstArgs = LispUtil.SplitInAtom(key);
         if (keyFirstArgs.Equals("lambda")) return true;
+        return false;
+    }
+    /// <summary>
+    /// 检查是否条件表达式
+    /// </summary>
+    private bool CheckIsCond(string key)
+    {
+        string keyFirstArgs = LispUtil.SplitInAtom(key);
+        if (keyFirstArgs.Equals("cond")) return true;
         return false;
     }
 

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 /// </summary>
 public abstract class BinaryOperatorAtom : BaseAtom
 {
-    public BinaryOperatorAtom(LispParser parser) : base(parser, "(x y)", "(operator x y)")
+    public BinaryOperatorAtom(LispParser parser) : base(parser, "(-x -y)", "(operator -x -y)")
     {
     }
 

@@ -44,7 +44,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lisp\Atom\BaseAtom.cs" />
+    <Compile Include="Lisp\Atom\Boolean\FalseAtom.cs" />
+    <Compile Include="Lisp\Atom\Boolean\TrueAtom.cs" />
+    <Compile Include="Lisp\Atom\Error\SemanticErrorAtom.cs" />
+    <Compile Include="Lisp\Atom\Error\SyntaxErrorAtom.cs" />
+    <Compile Include="Lisp\Atom\Func\CondAtom.cs" />
     <Compile Include="Lisp\Atom\Func\DefineAtom.cs" />
+    <Compile Include="Lisp\Atom\Func\EqualAtom.cs" />
     <Compile Include="Lisp\Atom\Func\LambdaAtom.cs" />
     <Compile Include="Lisp\Atom\Number\IntAtom.cs" />
     <Compile Include="Lisp\Atom\Operator\AddAtom.cs" />
@@ -52,7 +58,6 @@
     <Compile Include="Lisp\Atom\Operator\DivideAtom.cs" />
     <Compile Include="Lisp\Atom\Operator\MultiplyAtom.cs" />
     <Compile Include="Lisp\Atom\Operator\ReduceAtom.cs" />
-    <Compile Include="Lisp\Atom\ResultType.cs" />
     <Compile Include="Lisp\Parser\LispParser.cs" />
     <Compile Include="Lisp\RuntimeComponent\AtomStorage.cs" />
     <Compile Include="Lisp\RuntimeComponent\RuntimeAtomStack.cs" />
