@@ -10,15 +10,11 @@ public class CondAtom : BaseAtom
     {
     }
 
-    public override object GetResult()
+    public override string GetResult()
     {
-        throw new NotImplementedException();
+        return "CondAtom";
     }
 
-    protected override BaseAtom Handle(Template operand)
-    {
-        throw new NotImplementedException();
-    }
 
     public override BaseAtom Run(string list)
     {

@@ -10,12 +10,12 @@ public class TrueAtom : BaseAtom
     {
     }
 
-    public override object GetResult()
+    public override string GetResult()
     {
         return "True";
     }
 
-    protected override BaseAtom Handle(Template operand)
+    public override BaseAtom Run(string list)
     {
         return this;
     }

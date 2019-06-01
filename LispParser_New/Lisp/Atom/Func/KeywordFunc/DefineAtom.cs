@@ -10,7 +10,7 @@ public class DefineAtom : BaseAtom
     {
     }
 
-    public override object GetResult()
+    public override string GetResult()
     {
         return "DefineAtom";
     }
@@ -34,10 +34,5 @@ public class DefineAtom : BaseAtom
         }
         Parser.AtomStorage.RegisterAtom(key, defineFromAtom);
         return this;
-    }
-
-    protected override BaseAtom Handle(Template operand)
-    {
-        throw new NotImplementedException();
     }
 }

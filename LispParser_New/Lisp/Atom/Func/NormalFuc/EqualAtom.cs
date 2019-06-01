@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class EqualAtom : BaseAtom
+public class EqualAtom : BindingAtom
 {
     public EqualAtom(LispParser parser) : base(parser, "(x y)", "(eq? x y)")
     {
     }
 
-    public override object GetResult()
+    public override string GetResult()
     {
         return "EqualAtom";
     }
 
-    protected override BaseAtom Handle(Template operand)
+    protected override BaseAtom Handle()
     {
         BaseAtom[] templateResults = ParseTemplateAll();
         BaseAtom result = null;

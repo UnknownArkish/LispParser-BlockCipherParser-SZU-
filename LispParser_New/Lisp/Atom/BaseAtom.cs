@@ -3,7 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-
+/// <summary>
+/// 定义：
+///     一个Signal表示接受什么样的参数，例如：
+///     lambda (x y) (+ x y)中，(x y)的x和y都是Signal
+/// 作用:
+///     用以定位到Template，并根据此来绑定Template的数值
+/// </summary>
 public class Signal
 {
     /// <summary>
@@ -19,6 +25,14 @@ public class Signal
     /// </summary>
     public string BindingValue { get; set; }
 }
+/// <summary>
+/// 定义：
+///     一个Template表示一个原子或者列表，例如：
+///     lambda (x y) (+ x y)中，(+ x y)的+和x和y都是Template
+///     lambda (x y) (+ (+ x x) y)中，+、(+ x x)、y是三个Template
+/// 作用：
+///     被Signal定位，并最终会根据Template绑定的内容进行进一步的计算
+/// </summary>
 public class Template
 {
     public int Index { get; set; }
@@ -34,45 +48,48 @@ public class Template
 
 /// <summary>
 /// 所有函数原子的基类
+/// 任何继承自BaseAtom都可以用两部分组成，分别是Signal和Template，形如lambda (Signal) (Template)
+/// 任何东西（包括函数和数值）都可以看作是一个lambda表达式，基于这个原理，BaseAtom实现了以下动作:
+///     1. 加载Signal串和Template串，为子类的具体动作提供依据
+///     2. 提供了最原始的Run接口，Run接受的是原始的列表
 /// </summary>
-public abstract class BaseAtom
+public abstract class BaseAtom : ICanRun, ICanGetResult
 {
     public LispParser Parser { get; private set; }
+
+    private string m_SignalStr;
+    private Dictionary<string, Signal> m_SignalDict;
+
+    private string m_TemplateStr;
+    private Template m_Operator;
+    private Dictionary<int, Template> m_TemplateDict;
 
     /// <summary>
     /// 接收参数个数
     /// </summary>
     public int SignalNum { get { return m_SignalDict.Count; } }
-
-
-    private string m_SignalStr;
-    /// <summary>
-    /// Signal字典
-    /// </summary>
-    private Dictionary<string, Signal> m_SignalDict;
     /// <summary>
     /// 返回此函数原子的所有Signals
     /// </summary>
     public Signal[] Signals { get { return m_SignalDict.Values.ToArray(); } }
-
-
-    private string m_TemplateStr;
     /// <summary>
-    /// 操作数Template
+    /// 返回操作数的Template
     /// </summary>
-    protected Template m_Operator;
+    protected Template Operator { get => m_Operator; private set => m_Operator = value; }
     /// <summary>
-    /// Template字典
-    /// </summary>
-    private Dictionary<int, Template> m_TemplateDict;
-    /// <summary>
-    /// 返回此函数原子的所有Template
+    /// 返回此函数原子的所有Template（除去操作数Template）
     /// </summary>
     public Template[] Templates { get { return m_TemplateDict.Values.ToArray(); } }
 
 
-    /// <param name="signalsStr">形如(x y)</param>
-    /// <param name="templateStr">形如(??? x y)</param>
+    /****************************************************
+     *                    外部接口
+     ***************************************************/
+
+    public abstract BaseAtom Run(string list);
+    public abstract string GetResult();
+
+    
     public BaseAtom(LispParser parser, string signalsStr, string templateStr)
     {
         Parser = parser;
@@ -82,6 +99,12 @@ public abstract class BaseAtom
         LoadSignalStr(signalsStr);
         LoadTemplateStr(templateStr);
     }
+
+
+    /****************************************************
+     *                    内部接口
+     ***************************************************/
+
     private void LoadSignalStr(string signalStr)
     {
         m_SignalStr = signalStr;
@@ -120,7 +143,7 @@ public abstract class BaseAtom
             };
             if (i == 0)
             {
-                m_Operator = template;
+                Operator = template;
             }
             else
             {
@@ -129,122 +152,17 @@ public abstract class BaseAtom
         }
     }
 
-
-    public virtual BaseAtom Run(string list)
-    {
-        // @TODO: 解析list中的参数
-        string[] args = GetArgs(list);
-        // 先对args进行绑定，因为可能args中有些东西已经被定义过了
-        BindingArgs(args);
-        // @TODO: 对SignalsDict进行Signal的BindingValue进行绑定
-        BindingSignalValue(args);
-        // @TODO：向RuntimeAtomStack注册此Atom
-        Parser.RuntimeAtomStack.RegisterSignals(this);
-        // @TODO：对所有Template<替换>以后进行<ParserList>
-        BindingTemplateValue();
-        Parser.RuntimeAtomStack.RegisterTemplate(this);
-        Parser.RuntimeAtomStack.RegisterAtom(this);
-
-        // 将所有的templateResult交给具体自类处理
-        BaseAtom result = this.Handle(m_Operator);
-        // @TODO：向RuntimeAtomStack取消注册此Atom
-        Parser.RuntimeAtomStack.Unregister(this);
-
-        return result;
-    }
-
     /// <summary>
-    /// 
+    /// 从动态运行栈中绑定一个东西
     /// </summary>
-    protected abstract BaseAtom Handle(Template operand);
-    public abstract object GetResult();
-
-    public void BindingArgs(string[] args)
-    {
-        for( int i = 0; i < args.Length; i++)
-        {
-            if( LispUtil.IsAtom(args[i]))
-            {
-                // @TODO：先从RuntimeStack中取出数值
-                string temp = Parser.RuntimeAtomStack.GetSignalValue(args[i]);
-                // @TODO：如果为null，再从AtomStorage中取出数值
-                if (temp != null) args[i] = temp;
-            }
-            args[i] = Parser.ParseAndGetResult(args[i]) as string;
-        }
-    }
-
-    /// <summary>
-    /// 绑定Signal
-    /// </summary>
-    private void BindingSignalValue(string[] args)
-    {
-        foreach (Signal signal in Signals)
-        {
-            signal.BindingValue = args[signal.Index];
-        }
-    }
-    /// <summary>
-    /// 绑定TemplateValue，如果是非原子不会进行绑定
-    /// </summary>
-    private void BindingTemplateValue()
-    {
-        for (int i = 0; i < Templates.Length; i++)
-        {
-            Template template = Templates[i];
-            string toBindingValue = template.Name;
-
-            // 如果非原子，则从库中取出
-            if (LispUtil.IsAtom(toBindingValue))
-            {
-                // 先从Atom调用栈中除去数值
-                string temp = BindFromRuntimeStack(toBindingValue);
-                if (temp != null)
-                {
-                    toBindingValue = temp;
-                }
-            }
-            template.BindingValue = toBindingValue;
-        }
-    }
-
-    // 从动态运行栈中绑定
     protected string BindFromRuntimeStack(string toBind)
     {
         return Parser.RuntimeAtomStack.GetSignalValue(toBind);
     }
 
     /// <summary>
-    /// 解析指定的已绑定Value的Template
+    /// 根据自身的Signal个数切分得到所有的参数
     /// </summary>
-    protected BaseAtom ParseTemplate(Template template)
-    {
-        BaseAtom result = null;
-        if (LispUtil.IsAtom(template.BindingValue))
-        {
-            result = Parser.AtomStorage[template.BindingValue];
-        }
-        else
-        {
-            result = Parser.ParseAndGetAtom(template.BindingValue);
-        }
-        return result;
-    }
-    /// <summary>
-    /// 解析所有的已绑定的Template
-    /// </summary>
-    /// <returns></returns>
-    protected BaseAtom[] ParseTemplateAll()
-    {
-        BaseAtom[] results = new BaseAtom[Templates.Length];
-        for (int i = 0; i < Templates.Length; i++)
-        {
-            results[i] = ParseTemplate(Templates[i]);
-        }
-        return results;
-    }
-
-
     protected string[] GetArgs(string list)
     {
         string[] args = LispUtil.SplitInAtom(list, SignalNum + 1);
@@ -255,6 +173,4 @@ public abstract class BaseAtom
         }
         return result;
     }
-
-
 }

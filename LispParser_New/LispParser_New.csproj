@@ -43,21 +43,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Lisp\Atom\BindingAtom.cs" />
     <Compile Include="Lisp\Atom\BaseAtom.cs" />
-    <Compile Include="Lisp\Atom\Boolean\FalseAtom.cs" />
-    <Compile Include="Lisp\Atom\Boolean\TrueAtom.cs" />
+    <Compile Include="Lisp\Atom\Func\KeywordFunc\LambdaAtomFactory.cs" />
+    <Compile Include="Lisp\Atom\Number\Boolean\FalseAtom.cs" />
+    <Compile Include="Lisp\Atom\Number\Boolean\TrueAtom.cs" />
     <Compile Include="Lisp\Atom\Error\SemanticErrorAtom.cs" />
     <Compile Include="Lisp\Atom\Error\SyntaxErrorAtom.cs" />
-    <Compile Include="Lisp\Atom\Func\CondAtom.cs" />
-    <Compile Include="Lisp\Atom\Func\DefineAtom.cs" />
-    <Compile Include="Lisp\Atom\Func\EqualAtom.cs" />
-    <Compile Include="Lisp\Atom\Func\LambdaAtom.cs" />
+    <Compile Include="Lisp\Atom\Func\KeywordFunc\CondAtom.cs" />
+    <Compile Include="Lisp\Atom\Func\KeywordFunc\DefineAtom.cs" />
+    <Compile Include="Lisp\Atom\Func\NormalFuc\EqualAtom.cs" />
+    <Compile Include="Lisp\Atom\Func\NormalFuc\LambdaAtom.cs" />
+    <Compile Include="Lisp\Atom\Interface\ICanGetResult.cs" />
+    <Compile Include="Lisp\Atom\Interface\ICanRun.cs" />
     <Compile Include="Lisp\Atom\Number\IntAtom.cs" />
-    <Compile Include="Lisp\Atom\Operator\AddAtom.cs" />
-    <Compile Include="Lisp\Atom\Operator\BinaryOperatorAtom.cs" />
-    <Compile Include="Lisp\Atom\Operator\DivideAtom.cs" />
-    <Compile Include="Lisp\Atom\Operator\MultiplyAtom.cs" />
-    <Compile Include="Lisp\Atom\Operator\ReduceAtom.cs" />
+    <Compile Include="Lisp\Atom\Func\NormalFuc\Operator\AddAtom.cs" />
+    <Compile Include="Lisp\Atom\Func\NormalFuc\Operator\BinaryOperatorAtom.cs" />
+    <Compile Include="Lisp\Atom\Func\NormalFuc\Operator\DivideAtom.cs" />
+    <Compile Include="Lisp\Atom\Func\NormalFuc\Operator\MultiplyAtom.cs" />
+    <Compile Include="Lisp\Atom\Func\NormalFuc\Operator\ReduceAtom.cs" />
     <Compile Include="Lisp\Parser\LispParser.cs" />
     <Compile Include="Lisp\RuntimeComponent\AtomStorage.cs" />
     <Compile Include="Lisp\RuntimeComponent\RuntimeAtomStack.cs" />

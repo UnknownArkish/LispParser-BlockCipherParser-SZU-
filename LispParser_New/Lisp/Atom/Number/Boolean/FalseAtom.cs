@@ -4,18 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <summary>
+/// 同IntAtom
+/// </summary>
 public class FalseAtom : BaseAtom
 {
     public FalseAtom(LispParser parser) : base(parser, "()", "()")
     {
     }
 
-    public override object GetResult()
+    public override string GetResult()
     {
         return "False";
     }
 
-    protected override BaseAtom Handle(Template operand)
+    public override BaseAtom Run(string list)
     {
         return this;
     }
