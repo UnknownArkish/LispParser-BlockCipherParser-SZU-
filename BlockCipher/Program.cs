@@ -38,12 +38,15 @@ namespace BlockCipher
 
             // 输入state和key并进行加密
             int runCount = int.Parse(Console.ReadLine());
-            while (runCount-- >= 0)
+            while (runCount-- > 0)
             {
                 string state = Console.ReadLine();
                 string key = Console.ReadLine();
 
                 parser.Run(state, key);
+
+                Console.WriteLine(parser.GetState());
+                Console.WriteLine(parser.GetKey());
             }
 
             Console.WriteLine("Well Done!");

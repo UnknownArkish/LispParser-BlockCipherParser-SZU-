@@ -9,6 +9,11 @@ namespace BlockCipher
 {
     public abstract class BaseHandler
     {
-        public abstract BitArray Handle(params BitArray[] datas);
+        protected BlockCipherParser Parser { get; private set; }
+
+        public BaseHandler(BlockCipherParser parser)
+        {
+            Parser = parser;
+        }
     }
 }

@@ -39,17 +39,8 @@ namespace BlockCipher
                 return m_VariableDict[key];
             }
         }
-        /// <summary>
-        /// 添加一个变量，需要指定长度
-        /// 初始数值可选
-        /// </summary>
-        public void AddVariable(string key, int length, bool[] originValues = null)
-        {
-            BitArray variable = null;
-            if (originValues != null) variable = new BitArray(originValues);
-            else variable = new BitArray(length);
-            m_VariableDict[key] = variable;
-        }
+
+
         /// <summary>
         /// 添加一个变量，默认覆盖
         /// </summary>
@@ -57,6 +48,26 @@ namespace BlockCipher
         {
             if (m_VariableDict.ContainsKey(key) && !overlay) return;
             m_VariableDict[key] = value;
+        }
+        /// <summary>
+        /// 添加一个变量，需要指定长度
+        /// 初始数值可选，默认覆盖
+        /// </summary>
+        public void AddVariable(string key, int length, bool[] originValues = null, bool overlay = true)
+        {
+            BitArray variable = null;
+            if (originValues != null) variable = new BitArray(originValues);
+            else variable = new BitArray(length);
+            AddVariable(key, variable, overlay);
+        }
+        /// <summary>
+        /// 添加一个变量，以字符串作为初始变量
+        /// 默认覆盖
+        /// </summary>
+        public void AddVariable(string key, string value, bool overlay = true)
+        {
+            BitArray temp = BlockCipherUtil.StringToBitArray(value);
+            AddVariable(key, temp, overlay);
         }
 
     }

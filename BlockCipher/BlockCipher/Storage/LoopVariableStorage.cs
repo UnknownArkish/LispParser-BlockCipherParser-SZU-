@@ -10,11 +10,11 @@ namespace BlockCipher
     /// 动态运行时变量栈
     /// 默认每个变量的值都是字符串类型
     /// </summary>
-    public class RuntimeVariableStack
+    public class LoopVariableStorage
     {
         private Dictionary<string, Stack<int>> m_RuntimeVariableDict;
 
-        public RuntimeVariableStack()
+        public LoopVariableStorage()
         {
             m_RuntimeVariableDict = new Dictionary<string, Stack<int>>();
         }
@@ -25,7 +25,7 @@ namespace BlockCipher
         /// </summary>
         public void Push(string key, int value)
         {
-            if( m_RuntimeVariableDict.ContainsKey(key))
+            if( !m_RuntimeVariableDict.ContainsKey(key))
             {
                 RegisterVariableStack(key);
             }

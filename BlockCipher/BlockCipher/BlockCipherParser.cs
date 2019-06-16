@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace BlockCipher
 {
@@ -22,11 +18,11 @@ namespace BlockCipher
         /// <summary>
         /// 变量上下文
         /// </summary>
-        private string[] VariablesContext { get; set; }
+        private string[] VariableContext { get; set; }
         /// <summary>
         /// 代码上下文
         /// </summary>
-        private string[] CodesContext { get; set; }
+        private string[] CodeContext { get; set; }
 
         /// <summary>
         /// 置换、S箱库存
@@ -37,8 +33,15 @@ namespace BlockCipher
         /// 变量库存
         /// </summary>
         public VariableStorage VariableStorage { get; private set; }
+        /// <summary>
+        /// 循环变量库存
+        /// </summary>
+        public LoopVariableStorage LoopVariableStorage { get; private set; }
 
-        public RuntimeVariableStack RuntimeVariableStack { get; private set; }
+        /// <summary>
+        /// 表达式解析器
+        /// </summary>
+        public ExpressionParser ExpressionParser { get; private set; }
 
         /// <summary>
         /// 初始化一个BlockCipherParser，不会运行
@@ -50,9 +53,10 @@ namespace BlockCipher
         {
             PermuteSBoxStorage = new PermuteSBoxStorage(permuteStorages, sBoxStorages);
             VariableStorage = new VariableStorage();
-            RuntimeVariableStack = new RuntimeVariableStack();
+            LoopVariableStorage = new LoopVariableStorage();
+            ExpressionParser = new ExpressionParser(this);
 
-            // 解释处理rawContext
+            // 解释处理rawContextt
             ParseRawContext(rawContext);
             // 加载（静态）变量
             LoadVariables();
@@ -66,7 +70,7 @@ namespace BlockCipher
             List<string> variableContext = new List<string>();
             List<string> codeContext = new List<string>();
 
-            int indexOfBEGIN = BlockCipherUtil.FindLastOf(rawContext, "BEGIN");
+            int indexOfBEGIN = BlockCipherUtil.FindFirstOf(rawContext, "BEGIN");
             int indexOfEND = BlockCipherUtil.FindLastOf(rawContext, "END");
             for( int i = 0; i < indexOfBEGIN; i++)
             {
@@ -77,8 +81,8 @@ namespace BlockCipher
                 codeContext.Add(rawContext[i]);
             }
 
-            VariablesContext = variableContext.ToArray();
-            CodesContext = codeContext.ToArray();
+            VariableContext = variableContext.ToArray();
+            CodeContext = codeContext.ToArray();
 
             RawContext = rawContext;
         }
@@ -88,12 +92,12 @@ namespace BlockCipher
         /// </summary>
         private void LoadVariables()
         {
-            foreach(string variableContext in VariablesContext)
+            foreach(string variableContext in VariableContext)
             {
                 string variableKey = Regex.Match(variableContext, "(\\w+)").Value;
                 int length = int.Parse(Regex.Match(variableContext, "((\\d+))").Value);
 
-                VariableStorage.AddVariable(variableContext, length);
+                VariableStorage.AddVariable(variableKey, length);
             }
         }
 
@@ -102,17 +106,63 @@ namespace BlockCipher
         /// </summary>
         public void Run(string state, string key)
         {
-            InitBeforeRun();
+            InitBeforeRun( state, key );
+
+            // 取出CodeContext中，除了开头BEGIN和结束END的部分
+            string[] codeContext = new string[CodeContext.Length - 2];
+            for( int i = 1; i  < CodeContext.Length - 1; i++)
+            {
+                codeContext[i - 1] = CodeContext[i];
+            }
+            ParseCodeContext(codeContext);
 
             DisposeAfterRun();
         }
-        
+
+        /// <summary>
+        /// 解析一段代码上下文
+        /// </summary>
+        public void ParseCodeContext(string[] codeContext)
+        {
+            for( int i = 0; i < codeContext.Length; i++)
+            {
+                string code = codeContext[i];
+                if (code.Contains("SPLIT"))
+                {
+                    i = HandleSplitContext(code, codeContext);
+                }
+                else if (code.Contains("LOOP"))
+                {
+                    i = HandleLoopContext(code, codeContext);
+                }
+                else
+                {
+                    ExpressionParser.ParseExpression(code);
+                }
+            }
+        }
+        private int HandleLoopContext( string code, string[] codeContext)
+        {
+            string[] loopContext = BlockCipherUtil.GetLoopCodeContext(codeContext);
+            LoopHandler handler = new LoopHandler(this, code, loopContext);
+            handler.Run();
+            return BlockCipherUtil.FindLastOf(codeContext, "ENDLOOP");
+        }
+        private int HandleSplitContext( string code, string[] codeContext)
+        {
+
+            return BlockCipherUtil.FindLastContain(codeContext, "MERGE");
+        }
+
+
+
         /// <summary>
         /// Run之前的初始化
         /// </summary>
-        private void InitBeforeRun()
+        private void InitBeforeRun(string state, string key)
         {
-
+            VariableStorage.AddVariable("state", state);
+            VariableStorage.AddVariable("key", key);
         }
         /// <summary>
         /// Run之后的脏数据还原

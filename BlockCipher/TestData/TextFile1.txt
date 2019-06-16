@@ -1,0 +1,16 @@
+﻿1 1
+4 4
+1 2 3 0
+4 4
+0 1 2 3 3 2 1 0 12 13 14 15 15 14 13 12
+state(4)
+key(4)
+tmp(4)
+BEGIN
+LOOP i 1 1
+state = key = state + key
+ENDLOOP
+END
+1
+0101
+1100

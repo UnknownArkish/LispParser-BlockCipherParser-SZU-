@@ -45,15 +45,19 @@
   <ItemGroup>
     <Compile Include="BlockCipher\BlockCipherParser.cs" />
     <Compile Include="BlockCipher\Data\PSData.cs" />
+    <Compile Include="BlockCipher\ExpressionParser.cs" />
+    <Compile Include="BlockCipher\Handler\Expression\AssignmentHandler.cs" />
     <Compile Include="BlockCipher\Handler\BaseHandler.cs" />
     <Compile Include="BlockCipher\Handler\ConstHandler.cs" />
-    <Compile Include="BlockCipher\Handler\ExpressionHandler.cs" />
+    <Compile Include="BlockCipher\Handler\Expression\ExpressionHandler.cs" />
+    <Compile Include="BlockCipher\Handler\Expression\VariableHandler.cs" />
+    <Compile Include="BlockCipher\Handler\Expression\XORHandler.cs" />
     <Compile Include="BlockCipher\Handler\LoopHandler.cs" />
-    <Compile Include="BlockCipher\Handler\PermuteHandler.cs" />
-    <Compile Include="BlockCipher\Handler\SBoxHandler.cs" />
+    <Compile Include="BlockCipher\Handler\Expression\PermuteHandler.cs" />
+    <Compile Include="BlockCipher\Handler\Expression\SBoxHandler.cs" />
     <Compile Include="BlockCipher\Storage\BaseStorage.cs" />
     <Compile Include="BlockCipher\Storage\PermuteSBoxStorage.cs" />
-    <Compile Include="BlockCipher\Storage\RuntimeStorage.cs" />
+    <Compile Include="BlockCipher\Storage\LoopVariableStorage.cs" />
     <Compile Include="BlockCipher\Storage\VariableStorage.cs" />
     <Compile Include="BlockCipher\Util\BlockCipherUtil.cs" />
     <Compile Include="Program.cs" />
@@ -62,6 +66,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="TestData\TextFile1.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

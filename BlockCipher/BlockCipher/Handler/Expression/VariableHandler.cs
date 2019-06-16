@@ -8,17 +8,18 @@ using System.Threading.Tasks;
 namespace BlockCipher
 {
     /// <summary>
-    /// 常量Handler
+    /// 处理纯变量的Handler
     /// </summary>
-    public class ConstHandler : ExpressionHandler
+    public class VariableHandler : ExpressionHandler
     {
-        public ConstHandler(ExpressionParser expressionParser) : base(expressionParser)
+        public VariableHandler(ExpressionParser expressionParser) : base(expressionParser)
         {
         }
 
         public override BitArray Handle(string expression)
         {
-            return BlockCipherUtil.ConstToBitArray(expression);
+            expression = BindingVariable(expression);
+            return ExpressionParser.Parser.VariableStorage[expression];
         }
     }
 }

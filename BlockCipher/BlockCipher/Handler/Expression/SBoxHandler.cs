@@ -4,8 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlockCipher.BlockCipher.Handler
+namespace BlockCipher
 {
+    /// <summary>
+    /// 处理S盒的Handler
+    /// </summary>
     class SBoxHandler
     {
     }
