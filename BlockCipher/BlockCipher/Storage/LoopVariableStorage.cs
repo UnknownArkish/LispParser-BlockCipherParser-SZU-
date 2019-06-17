@@ -56,13 +56,23 @@ namespace BlockCipher
             get
             {
                 int result = -1;
-                if (m_RuntimeVariableDict.ContainsKey(key))
+                // 如果key直接就是数字，则返回
+                try
                 {
-                    if (m_RuntimeVariableDict[key].Count > 0)
+                    result = int.Parse(key);
+                }
+                // 否则从库里寻找
+                catch (Exception)
+                {
+                    if (m_RuntimeVariableDict.ContainsKey(key))
                     {
-                        result = m_RuntimeVariableDict[key].Peek();
+                        if (m_RuntimeVariableDict[key].Count > 0)
+                        {
+                            result = m_RuntimeVariableDict[key].Peek();
+                        }
                     }
                 }
+
                 return result;
             }
         }

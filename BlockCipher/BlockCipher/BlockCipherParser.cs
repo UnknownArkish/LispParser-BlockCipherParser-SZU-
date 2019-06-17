@@ -74,11 +74,13 @@ namespace BlockCipher
             int indexOfEND = BlockCipherUtil.FindLastOf(rawContext, "END");
             for( int i = 0; i < indexOfBEGIN; i++)
             {
-                variableContext.Add(rawContext[i]);
+                if (!string.IsNullOrEmpty(rawContext[i]))
+                    variableContext.Add(rawContext[i]);
             }
-            for( int i = indexOfBEGIN; i <= indexOfEND; i++)
+            for (int i = indexOfBEGIN; i <= indexOfEND; i++)
             {
-                codeContext.Add(rawContext[i]);
+                if (!string.IsNullOrEmpty(rawContext[i]))
+                    codeContext.Add(rawContext[i]);
             }
 
             VariableContext = variableContext.ToArray();
@@ -150,7 +152,9 @@ namespace BlockCipher
         }
         private int HandleSplitContext( string code, string[] codeContext)
         {
-
+            string[] splitContext = BlockCipherUtil.GetSplitCodeContext(codeContext);
+            SplitHandler handler = new SplitHandler(this, code, splitContext);
+            handler.Run();
             return BlockCipherUtil.FindLastContain(codeContext, "MERGE");
         }
 

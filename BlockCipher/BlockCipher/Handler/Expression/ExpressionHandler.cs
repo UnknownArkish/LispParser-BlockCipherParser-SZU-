@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace BlockCipher
 {
@@ -25,9 +26,25 @@ namespace BlockCipher
         /// </summary>
         protected string BindingVariable(string variableKey)
         {
+            Regex reg = new Regex(@"(\[\w+\])");
+            Match match = reg.Match(variableKey);
+            
+            while( match.Success)
+            {
+                string temp = BindMatchValue(match.Value);
+                variableKey = variableKey.Replace(match.Value, temp);
 
+                match = match.NextMatch();
+            }
 
             return variableKey;
+        }
+
+        private string BindMatchValue(string matchValue)
+        {
+            Match match = Regex.Match(matchValue, @"\w+");
+            string toReplace = ExpressionParser.Parser.LoopVariableStorage[match.Value].ToString();
+            return matchValue.Replace(match.Value, toReplace);
         }
     }
 }

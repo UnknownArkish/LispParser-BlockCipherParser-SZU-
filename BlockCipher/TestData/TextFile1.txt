@@ -6,9 +6,14 @@
 state(4)
 key(4)
 tmp(4)
+
 BEGIN
-LOOP i 1 1
-state = key = state + key
+SPLIT( state, 2 )
+test
+MERGE( state )
+
+LOOP i 0 0
+state = key = S[i]("1111")
 ENDLOOP
 END
 1

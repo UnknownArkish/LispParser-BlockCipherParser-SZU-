@@ -13,6 +13,23 @@ namespace BlockCipher
     /// </summary>
     public class ExpressionParser
     {
+
+        private static readonly Dictionary<char,int> OperationDict = new Dictionary<char, int>
+        {
+            ['='] = 0,
+            ['+'] = 1
+        };
+        /// <summary>
+        ///   = +
+        /// = 0 -1
+        /// + 1 0
+        /// </summary>
+        private static readonly int[][] OperationPriority =
+        {
+            new int[]{0, -1 },
+            new int[]{1,  0 },
+        };
+
         public BlockCipherParser Parser { get;private set; }
 
         public ExpressionParser(BlockCipherParser parser)
@@ -37,7 +54,14 @@ namespace BlockCipher
             }
             else if( expression[0] == 'P' || expression[0] == 'S')
             {
-
+                if( expression[0] == 'P')
+                {
+                    handler = new PermuteHandler(this);
+                }
+                else
+                {
+                    handler = new SBoxHandler(this);
+                }
             }
             else
             {
@@ -56,5 +80,37 @@ namespace BlockCipher
             result = handler.Handle(expression);
             return result;
         }
+
+        
+        //public BitArray ParseExpression_( string expression)
+        //{
+        //    Stack<string> variable = new Stack<string>();
+        //    Stack<char> operation = new Stack<char>();
+
+        //    for( int i = 0; i < expression.Length; i++)
+        //    {
+        //        if( !OperationDict.ContainsKey(expression[i]))
+        //        {
+        //            int j = i;
+        //            StringBuilder sb = new StringBuilder();
+        //            while( !OperationDict.ContainsKey(expression[j]))
+        //            {
+        //                if( expression[j] != ' ' )
+        //                    sb.Append(expression[j]);
+        //                j++;
+        //            }
+        //            i = j - 1;
+        //            variable.Push(sb.ToString());
+        //        }
+        //        else
+        //        {
+        //            operation.Push(expression[i]);
+        //        }
+        //    }
+
+        //    return null;
+        //}
+
+
     }
 }

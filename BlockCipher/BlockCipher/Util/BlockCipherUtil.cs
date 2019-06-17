@@ -126,6 +126,18 @@ namespace BlockCipher
             return result.ToArray();
         }
 
+        public static string[] GetSplitCodeContext(string[] codeContext)
+        {
+            List<string> result = new List<string>();
+            int loopIndex = FindFirstContain(codeContext, "SPLIT");
+            int loopEnd = FindLastContain(codeContext, "MERGE");
+            for (int i = loopIndex + 1; i < loopEnd; i++)
+            {
+                result.Add(codeContext[i]);
+            }
+            return result.ToArray();
+        }
+
         
 
     }
