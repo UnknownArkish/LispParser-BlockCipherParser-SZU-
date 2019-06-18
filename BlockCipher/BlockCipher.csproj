@@ -48,12 +48,12 @@
     <Compile Include="BlockCipher\ExpressionParser.cs" />
     <Compile Include="BlockCipher\Handler\Expression\AssignmentHandler.cs" />
     <Compile Include="BlockCipher\Handler\BaseHandler.cs" />
-    <Compile Include="BlockCipher\Handler\ConstHandler.cs" />
+    <Compile Include="BlockCipher\Handler\Value\ConstHandler.cs" />
     <Compile Include="BlockCipher\Handler\Expression\ExpressionHandler.cs" />
-    <Compile Include="BlockCipher\Handler\Expression\SplitHandler.cs" />
-    <Compile Include="BlockCipher\Handler\Expression\VariableHandler.cs" />
+    <Compile Include="BlockCipher\Handler\Function\SplitHandler.cs" />
+    <Compile Include="BlockCipher\Handler\Value\VariableHandler.cs" />
     <Compile Include="BlockCipher\Handler\Expression\XORHandler.cs" />
-    <Compile Include="BlockCipher\Handler\LoopHandler.cs" />
+    <Compile Include="BlockCipher\Handler\Function\LoopHandler.cs" />
     <Compile Include="BlockCipher\Handler\Expression\PermuteHandler.cs" />
     <Compile Include="BlockCipher\Handler\Expression\SBoxHandler.cs" />
     <Compile Include="BlockCipher\Storage\BaseStorage.cs" />

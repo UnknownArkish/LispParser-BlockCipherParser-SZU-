@@ -45,8 +45,8 @@ namespace BlockCipher
 
                 parser.Run(state, key);
 
-                Console.WriteLine(parser.GetState());
-                Console.WriteLine(parser.GetKey());
+                Console.WriteLine( "state::" + parser.GetState());
+                Console.WriteLine( "key::" +  parser.GetKey());
             }
 
             Console.WriteLine("Well Done!");

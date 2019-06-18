@@ -70,5 +70,14 @@ namespace BlockCipher
             AddVariable(key, temp, overlay);
         }
 
+        /// <summary>
+        /// 移除一个变量并返回是否成功移除的结果，如果变量不存在，返回false
+        /// </summary>
+        public bool RemoveVariable(string key)
+        {
+            if (!ContainVariable(key)) return false;
+            m_VariableDict[key] = null;
+            return true;
+        }
     }
 }

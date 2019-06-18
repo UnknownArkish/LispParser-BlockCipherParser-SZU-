@@ -21,7 +21,7 @@ namespace BlockCipher
         {
             int pIndex = GetPIndex(expression);
             BitArray op = GetOperator(expression);
-            PSData permute = ExpressionParser.Parser.PermuteSBoxStorage.Permute[pIndex];
+            PSData permute = Parser.PermuteSBoxStorage.Permute[pIndex];
 
             BitArray result = PermuteCalculate(permute, op);
             return result;

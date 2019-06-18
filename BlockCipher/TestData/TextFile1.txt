@@ -9,12 +9,10 @@ tmp(4)
 
 BEGIN
 SPLIT( state, 2 )
-test
+	LOOP i 0 1
+		state[i] = state[i] + "10"
+	ENDLOOP
 MERGE( state )
-
-LOOP i 0 0
-state = key = S[i]("1111")
-ENDLOOP
 END
 1
 0101

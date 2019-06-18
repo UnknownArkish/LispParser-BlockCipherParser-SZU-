@@ -26,7 +26,7 @@ namespace BlockCipher
             BitArray result = ExpressionParser.ParseExpression(variableValue);
 
             // 更新并返回变量的数值
-            ExpressionParser.Parser.VariableStorage.AddVariable(variableKey, result);
+            Parser.VariableStorage.AddVariable(variableKey, result);
             return result;
         }
     }
