@@ -38,13 +38,17 @@
 #### 注意
 - 由于ddl时间紧迫，使用的是简单粗暴的表达式运算方法，因此不能很好的处理运算符优先级问题
 - 容错性较低，不能很好的处理语法错误问题
+---
 
 ## 开发平台及语言
 - Visual Studio 2017
 - C#
 
+---
+
 ## License & Release
 见<a href="https://github.com/UnknownArkish/LispParser-BlockCipherParser/blob/dev/LICENSE">LICENSE.md</a>
 
+---
 ## 如何使用
 - 使用Visual Studio2017（或更高版本）打开PL_HW_2.sln（VS解决方案文件），编译即可运行
