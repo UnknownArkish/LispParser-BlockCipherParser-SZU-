@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Description\Lisp语言解释器.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Lisp\Args\" />

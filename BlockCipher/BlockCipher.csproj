@@ -66,9 +66,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Decription_TestData\分组加密算法语言.pdf" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TestData\TextFile1.txt" />
+    <Content Include="Decription_TestData\TextFile1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
