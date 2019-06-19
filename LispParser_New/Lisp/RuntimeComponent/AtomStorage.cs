@@ -25,14 +25,11 @@ public class AtomStorage
         get
         {
             BaseAtom result = null;
-            if (!ContainKey(key))
+            // 检查是否为整型
+            if (!ContainKey(key) && CheckIsNum(key))
             {
-                try
-                {
-                    int value = int.Parse(key);
-                    this.RegisterAtom(key, new IntAtom(Parser, key));
-                }
-                catch (Exception) { }
+                // 如果是则创建此原子，并注册进库中
+                this.RegisterAtom(key, new IntAtom(Parser, key));
             }
             if (ContainKey(key))
             {
@@ -79,10 +76,10 @@ public class AtomStorage
     {
         m_AtomDict = new Dictionary<string, BaseAtom>
         {
-            ["+"] = new AddAtom(Parser),
-            ["-"] = new ReduceAtom(Parser),
-            ["*"] = new MultiplyAtom(Parser),
-            ["/"] = new DivideAtom(Parser),
+            ["+"] = new AddAtom(Parser),                        // 加法原子
+            ["-"] = new ReduceAtom(Parser),                     // 减法原子
+            ["*"] = new MultiplyAtom(Parser),                   // 乘法原子
+            ["/"] = new DivideAtom(Parser),                     // 除法原子
 
             ["True"] = new TrueAtom(Parser),
             ["False"] = new FalseAtom(Parser),
@@ -92,6 +89,22 @@ public class AtomStorage
             ["eq?"] = new EqualAtom(Parser),
             ["CondFactory"] = new CondAtom(Parser),
         };
+    }
+
+    /// <summary>
+    /// 检查是否为整型
+    /// </summary>
+    private bool CheckIsNum(string key)
+    {
+        try
+        {
+            int temp = int.Parse(key);
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
     }
 
     /// <summary>

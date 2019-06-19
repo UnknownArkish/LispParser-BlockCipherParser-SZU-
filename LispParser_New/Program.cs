@@ -11,8 +11,13 @@ namespace LispParser_New
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, LispParser!");
-
+            // 创建一个Lisp解释器
             LispParser parser = new LispParser();
+            // 测试define和整形原子
+            Console.WriteLine( "输出1的结果:: " + parser.ParseAndGetResult("1"));
+            Console.WriteLine(parser.ParseAndGetResult("(define one 1)"));
+            Console.WriteLine( "输出one的结果:: " + parser.ParseAndGetResult("one"));
+
             // 最普通的输出
             Console.WriteLine(parser.ParseAndGetResult("(+ (+ 2 3) 3)"));
 
