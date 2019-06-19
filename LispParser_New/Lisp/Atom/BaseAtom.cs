@@ -86,18 +86,29 @@ public abstract class BaseAtom : ICanRun, ICanGetResult
      *                    外部接口
      ***************************************************/
 
+    /// <summary>
+    /// 解释一个列表表达式，返回一个BaseAtom
+    /// </summary>
     public abstract BaseAtom Run(string list);
+    /// <summary>
+    /// 返回代表此BaseAtom的字符串
+    /// </summary>
     public abstract string GetResult();
 
-    
+    /// <summary>
+    /// BaseAtom的构造函数
+    /// </summary>
+    /// <param name="parser">依赖的解释器</param>
+    /// <param name="signalsStr">标志字符串，形如( x y )</param>
+    /// <param name="templateStr">模板字符串，形如( +  x y )</param>
     public BaseAtom(LispParser parser, string signalsStr, string templateStr)
     {
         Parser = parser;
         m_SignalDict = new Dictionary<string, Signal>();
         m_TemplateDict = new Dictionary<int, Template>();
 
-        LoadSignalStr(signalsStr);
-        LoadTemplateStr(templateStr);
+        LoadSignalStr(signalsStr);                  // 加载标志字符串
+        LoadTemplateStr(templateStr);               // 加载模板字符串
     }
 
 
@@ -113,7 +124,6 @@ public abstract class BaseAtom : ICanRun, ICanGetResult
         signalStr = LispUtil.RemoveBracket(signalStr);
         if (string.IsNullOrEmpty(signalStr)) return;
         string[] signalStrs = signalStr.Split(' ');
-        //SignalNum = signalStrs.Length;
         for (int i = 0; i < signalStrs.Length; i++)
         {
             m_SignalDict[signalStrs[i]] = new Signal()

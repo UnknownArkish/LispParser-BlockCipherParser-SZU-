@@ -19,6 +19,7 @@ namespace LispParser_New
             // lambda输出结果
             Console.WriteLine(parser.ParseAndGetResult("((lambda (x y z) (+ (+ x y) z)) 2 3 5)"));
             // define分别lambda和lambda的输出结果
+            Console.WriteLine(parser.ParseAndGetResult("(define one ( + 1 0 ))"));
             Console.WriteLine(parser.ParseAndGetResult("(define add3 (lambda (x y z) (+ (+ x y) z)))"));
             Console.WriteLine(parser.ParseAndGetResult("(define add4 (lambda (a b c d) (+ (add3 a b c) d)))"));
             Console.WriteLine(parser.ParseAndGetResult("((lambda () (+ ((lambda () (+ 2 3))) 3)))"));
@@ -31,7 +32,7 @@ namespace LispParser_New
             Console.WriteLine(parser.ParseAndGetResult("(add4 1 2 3 5)"));
 
             // eq?函数
-            Console.WriteLine(parser.ParseAndGetResult("(eq? 1 1)"));
+            Console.WriteLine(parser.ParseAndGetResult("(eq? one 1)"));
             Console.WriteLine(parser.ParseAndGetResult("(eq? 4 (+ 1 2))"));
             Console.WriteLine(parser.ParseAndGetResult("(eq? (eq? 1 2) False)"));
 
