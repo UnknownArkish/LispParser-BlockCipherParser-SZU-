@@ -27,9 +27,10 @@ public abstract class BindingAtom : BaseAtom
         BindingSignalValue(args);
         // @TODO：向RuntimeAtomStack注册此Atom
         Parser.RuntimeAtomStack.RegisterSignals(this);
-        // @TODO：对所有Template<替换>以后进行<ParserList>
+
+        // @TODO：对所有Template用运行时栈进行替换
         BindingTemplateValue();
-        Parser.RuntimeAtomStack.RegisterTemplate(this);
+        // 将此函数注册到运行时栈中
         Parser.RuntimeAtomStack.RegisterAtom(this);
 
         // 将所有的templateResult交给具体自类处理
@@ -38,6 +39,8 @@ public abstract class BindingAtom : BaseAtom
         Parser.RuntimeAtomStack.Unregister(this);
 
         return result;
+
+        //Parser.RuntimeAtomStack.RegisterTemplate(this);
     }
 
     /// <summary>
@@ -52,14 +55,7 @@ public abstract class BindingAtom : BaseAtom
     protected BaseAtom ParseTemplate(Template template)
     {
         BaseAtom result = null;
-        if (LispUtil.IsAtom(template.BindingValue))
-        {
-            result = Parser.AtomStorage[template.BindingValue];
-        }
-        else
-        {
-            result = Parser.ParseAndGetAtom(template.BindingValue);
-        }
+        result = Parser.ParseAndGetAtom(template.BindingValue);
         return result;
     }
     /// <summary>
@@ -116,7 +112,7 @@ public abstract class BindingAtom : BaseAtom
             // 如果非原子，则从库中取出
             if (LispUtil.IsAtom(toBindingValue))
             {
-                // 先从Atom调用栈中除去数值
+                // 先从Atom调用栈中取出数值
                 string temp = BindFromRuntimeStack(toBindingValue);
                 if (temp != null)
                 {

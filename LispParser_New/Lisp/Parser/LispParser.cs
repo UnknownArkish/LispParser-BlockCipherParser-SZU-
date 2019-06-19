@@ -31,11 +31,13 @@ public class LispParser
     /// </summary>
     public BaseAtom ParseAndGetAtom(string list)
     {
+        // 判断list是否为原子，如果是原子，则直接从原子库中获取
         if (LispUtil.IsAtom(list))
         {
             BaseAtom atom = AtomStorage[list];
             return atom;
         }
+        // 否则是列表，则调用对应的原子进行运算
         else
         {
             list = LispUtil.RemoveBracket(list);
@@ -43,9 +45,5 @@ public class LispParser
             BaseAtom atom = AtomStorage[key];
             return atom.Run(list);
         }
-        return null;
     }
-
-    
-
 }

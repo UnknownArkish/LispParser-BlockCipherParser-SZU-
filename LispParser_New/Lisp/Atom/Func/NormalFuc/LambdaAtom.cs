@@ -32,6 +32,5 @@ public class LambdaAtom : BindingAtom
             sb.Append(result);
         }
         return atom.Run(sb.ToString());
-        return null;
     }
 }

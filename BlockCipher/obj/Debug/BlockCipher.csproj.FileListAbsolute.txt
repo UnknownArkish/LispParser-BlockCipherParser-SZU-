@@ -5,3 +5,10 @@ D:\projects\C#\PL_HW_2\BlockCipher\obj\Debug\BlockCipher.csprojAssemblyReference
 D:\projects\C#\PL_HW_2\BlockCipher\obj\Debug\BlockCipher.csproj.CoreCompileInputs.cache
 D:\projects\C#\PL_HW_2\BlockCipher\obj\Debug\BlockCipher.exe
 D:\projects\C#\PL_HW_2\BlockCipher\obj\Debug\BlockCipher.pdb
+D:\github\LispParser-BlockCipherParser\BlockCipher\bin\Debug\BlockCipher.exe.config
+D:\github\LispParser-BlockCipherParser\BlockCipher\bin\Debug\BlockCipher.exe
+D:\github\LispParser-BlockCipherParser\BlockCipher\bin\Debug\BlockCipher.pdb
+D:\github\LispParser-BlockCipherParser\BlockCipher\obj\Debug\BlockCipher.csprojAssemblyReference.cache
+D:\github\LispParser-BlockCipherParser\BlockCipher\obj\Debug\BlockCipher.csproj.CoreCompileInputs.cache
+D:\github\LispParser-BlockCipherParser\BlockCipher\obj\Debug\BlockCipher.exe
+D:\github\LispParser-BlockCipherParser\BlockCipher\obj\Debug\BlockCipher.pdb

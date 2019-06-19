@@ -39,15 +39,6 @@ public class CondAtom : BaseAtom
         result = Parser.ParseAndGetAtom(resultToBind);
         return result;
     }
-
-    private string ParseCond(string cond)
-    {
-        string temp = LispUtil.RemoveBracket(cond);
-        string[] condContents = LispUtil.SplitInAtomAll(temp);
-        string condResult = Parser.ParseAndGetResult(condContents[0]) as string;
-        return null;
-    }
-
 }
 
 class CondArgsParser
