@@ -35,14 +35,10 @@ public class LambdaAtomFactory : BaseAtom
         LambdaAtom lambdaAtom = new LambdaAtom(Parser, args[0], args[1]);
 
         // @TODO: 如果list后面没有内容，则直接返回这个LambdaAtom
-        if (!shouldRunResult)
-        {
-            return lambdaAtom;
-        }
-        else
-        {
-            return lambdaAtom.Run(list);
-        }
+        BaseAtom result = lambdaAtom;
+        if (shouldRunResult)
+            result = lambdaAtom.Run(list);
+        return result;
     }
 
     public override string GetResult()

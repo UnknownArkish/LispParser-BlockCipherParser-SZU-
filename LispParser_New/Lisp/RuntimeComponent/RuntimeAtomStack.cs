@@ -12,24 +12,17 @@ public class RuntimeSignal
     public string Name { get; set; }
     public string BindingValue { get; set; }
 }
-/// <summary>
-/// 运行时Template
-/// </summary>
-public class RuntimeTemplate
-{
-    public string Name { get; set; }
-    public string BindingValue { get; set; }
-}
 
 /// <summary>
 /// 运行时的函数原子栈
 /// </summary>
 public class RuntimeAtomStack
 {
+    // 解释器
     public LispParser Parser { get; private set; }
-
+    // 原子运行栈
     private Stack<BaseAtom> m_AtomStack;
-
+    // 原子运行时，向栈中push入Signal的字典
     private Dictionary<string, Stack<RuntimeSignal>> m_RuntimeSignalDict;
 
     public RuntimeAtomStack(LispParser parser)
@@ -52,7 +45,9 @@ public class RuntimeAtomStack
             PushRuntimeSignal(signal);
         }
     }
-
+    /// <summary>
+    /// 注册一个原子，类似于函数调用栈
+    /// </summary>
     public void RegisterAtom(BaseAtom atom)
     {
         m_AtomStack.Push(atom);

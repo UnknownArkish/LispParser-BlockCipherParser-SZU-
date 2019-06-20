@@ -18,19 +18,21 @@ public class LambdaAtom : BindingAtom
 
     protected override BaseAtom Handle()
     {
-        BaseAtom atom = Parser.AtomStorage[Operator.Name];
+        // 运行、解释所有的Template后
         BaseAtom[] templateResults = ParseTemplateAll();
         string[] resuls = new string[templateResults.Length];
         for( int i = 0; i < templateResults.Length; i++)
         {
             resuls[i] = templateResults[i].GetResult() as string;
         }
-        StringBuilder sb = new StringBuilder(Operator.Name);
+        // 开始构造列表
+        StringBuilder sb = new StringBuilder( "(" + Operator.Name);
         foreach( string result in resuls)
         {
             sb.Append(' ');
             sb.Append(result);
         }
-        return atom.Run(sb.ToString());
+        sb.Append(")");
+        return Parser.ParseAndGetAtom(sb.ToString());
     }
 }

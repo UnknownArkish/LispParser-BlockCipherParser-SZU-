@@ -19,15 +19,15 @@ public abstract class BindingAtom : BaseAtom
 
     public override BaseAtom Run(string list)
     {
-        // @TODO: 解析list中的参数
+        // 解析list中的参数
         string[] args = GetArgs(list);
+
         // 先对args进行绑定，因为可能args中有些东西已经被定义过了
         BindingArgs(args);
         // @TODO: 对SignalsDict进行Signal的BindingValue进行绑定
         BindingSignalValue(args);
         // @TODO：向RuntimeAtomStack注册此Atom
         Parser.RuntimeAtomStack.RegisterSignals(this);
-
         // @TODO：对所有Template用运行时栈进行替换
         BindingTemplateValue();
         // 将此函数注册到运行时栈中
