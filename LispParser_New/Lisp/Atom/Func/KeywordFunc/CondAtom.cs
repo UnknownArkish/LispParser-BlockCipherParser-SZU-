@@ -24,17 +24,14 @@ public class CondAtom : BaseAtom
         string[] args = LispUtil.SplitInAtomAll(list);
         for (int i = 1; i < args.Length; i++)
         {
+            // 将每个CondArg交给CondArgsParser处理
             CondArgsParser condArgsParser = new CondArgsParser(Parser, args[i]);
+            // 如果CondArgsParser得到的结果是True，说明使用此CondArg的列表
             if( condArgsParser.ArgIsTrue)
             {
                 resultToBind = condArgsParser.ArgResult;
                 break;
             }
-        }
-        // @TODO：绑定resultToBind到result
-        if( Parser.RuntimeAtomStack.IsHaveSignalValue(resultToBind))
-        {
-            resultToBind = BindFromRuntimeStack(resultToBind);
         }
         result = Parser.ParseAndGetAtom(resultToBind);
         return result;

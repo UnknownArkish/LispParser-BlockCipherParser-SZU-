@@ -28,8 +28,6 @@ public abstract class BindingAtom : BaseAtom
         BindingSignalValue(args);
         // @TODO：向RuntimeAtomStack注册此Atom
         Parser.RuntimeAtomStack.RegisterSignals(this);
-        // @TODO：对所有Template用运行时栈进行替换
-        BindingTemplateValue();
         // 将此函数注册到运行时栈中
         Parser.RuntimeAtomStack.RegisterAtom(this);
 
@@ -40,6 +38,8 @@ public abstract class BindingAtom : BaseAtom
 
         return result;
 
+        // @TODO：对所有Template用运行时栈进行替换
+        //BindingTemplateValue();
         //Parser.RuntimeAtomStack.RegisterTemplate(this);
     }
 
@@ -78,13 +78,6 @@ public abstract class BindingAtom : BaseAtom
     {
         for (int i = 0; i < args.Length; i++)
         {
-            if (LispUtil.IsAtom(args[i]))
-            {
-                // @TODO：先从RuntimeStack中取出数值
-                string temp = Parser.RuntimeAtomStack.GetSignalValue(args[i]);
-                // @TODO：如果为null，再从AtomStorage中取出数值
-                if (temp != null) args[i] = temp;
-            }
             args[i] = Parser.ParseAndGetResult(args[i]) as string;
         }
     }
@@ -99,28 +92,31 @@ public abstract class BindingAtom : BaseAtom
             signal.BindingValue = args[signal.Index];
         }
     }
-    /// <summary>
-    /// 绑定TemplateValue，如果是非原子不会进行绑定
-    /// </summary>
-    private void BindingTemplateValue()
-    {
-        for (int i = 0; i < Templates.Length; i++)
-        {
-            Template template = Templates[i];
-            string toBindingValue = template.Name;
 
-            // 如果非原子，则从库中取出
-            if (LispUtil.IsAtom(toBindingValue))
-            {
-                // 先从Atom调用栈中取出数值
-                string temp = BindFromRuntimeStack(toBindingValue);
-                if (temp != null)
-                {
-                    toBindingValue = temp;
-                }
-            }
-            template.BindingValue = toBindingValue;
-        }
-    }
+
+    ///// <summary>
+    ///// 绑定TemplateValue，如果是非原子不会进行绑定
+    ///// </summary>
+    //private void BindingTemplateValue()
+    //{
+    //    for (int i = 0; i < Templates.Length; i++)
+    //    {
+    //        Template template = Templates[i];
+    //        string toBindingValue = template.Name;
+
+    //        // 如果非原子，则从库中取出
+    //        if (LispUtil.IsAtom(toBindingValue))
+    //        {
+    //            // 先从Atom调用栈中取出数值
+    //            string temp = BindFromRuntimeStack(toBindingValue);
+    //            if (temp != null)
+    //            {
+    //                toBindingValue = temp;
+    //            }
+    //        }
+    //        template.BindingValue = toBindingValue;
+    //    }
+    //}
+
     #endregion
 }

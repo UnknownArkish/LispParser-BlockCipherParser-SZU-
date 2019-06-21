@@ -34,6 +34,11 @@ public class LispParser
         // 判断list是否为原子，如果是原子，则直接从原子库中获取
         if (LispUtil.IsAtom(list))
         {
+            // 如果RuntimeAtomStack中有，则先绑定
+            if( RuntimeAtomStack.IsHaveSignalValue(list))
+            {
+                list = RuntimeAtomStack.GetSignalValue(list);
+            }
             BaseAtom atom = AtomStorage[list];
             return atom;
         }
