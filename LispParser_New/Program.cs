@@ -13,11 +13,27 @@ namespace LispParser_New
             Console.WriteLine("Hello, LispParser!");
             // 创建一个Lisp解释器
             LispParser parser = new LispParser();
+            
+
+            /*
+             *  下面是报告过程中的测试
+             */
             // 测试define和整形原子
             Console.WriteLine( "输出1的结果:: " + parser.ParseAndGetResult("1"));
             Console.WriteLine(parser.ParseAndGetResult("(define one 1)"));
             Console.WriteLine( "输出one的结果:: " + parser.ParseAndGetResult("one"));
 
+            Console.WriteLine( parser.ParseAndGetResult( "( ( lambda ( x y ) ( + ( ( lambda ( y ) ( + x y ) ) 3 ) y ) ) 1 2 )" ));
+            
+            Console.WriteLine( "输出True的结果:: " + parser.ParseAndGetResult("True"));
+            Console.WriteLine("eq?判断True和Fasel是否相等:: " + parser.ParseAndGetResult("( eq? True False )"));
+            Console.WriteLine("eq?判断1和(+ 0 1)是否相等:: " + parser.ParseAndGetResult("( eq? 1 ( + 0 1 ) )"));
+
+
+
+            /*
+             *  下面是原来的测试
+             */
             // 最普通的输出
             Console.WriteLine(parser.ParseAndGetResult("(+ (+ 2 3) 3)"));
 
