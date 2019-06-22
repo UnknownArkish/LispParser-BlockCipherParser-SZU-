@@ -23,7 +23,7 @@ namespace BlockCipher
             // 左结合，因此先从最右开始
             string op1 = expression.Substring(0, expression.LastIndexOf('+')).Trim();
             string op2 = expression.Substring(expression.LastIndexOf('+') + 1).Trim();
-
+            // 将左边的表达式和右边的表达式交给解释器处理
             BitArray result1 = ExpressionParser.ParseExpression(op1);
             BitArray result2 = ExpressionParser.ParseExpression(op2);
             

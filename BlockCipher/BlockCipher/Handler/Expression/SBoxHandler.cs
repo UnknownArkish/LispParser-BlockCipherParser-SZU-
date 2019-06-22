@@ -29,7 +29,6 @@ namespace BlockCipher
             {
                 resultStr.Insert(0, "0");
             }
-
             BitArray result = BlockCipherUtil.StringToBitArray(resultStr.ToString());
             return result;
         }

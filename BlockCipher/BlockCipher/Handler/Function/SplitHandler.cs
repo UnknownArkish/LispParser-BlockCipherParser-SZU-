@@ -21,7 +21,8 @@ namespace BlockCipher
 
         public string[] CodeContext { get; private set; }
 
-        public SplitHandler(BlockCipherParser parser, string splitCode, string[] codeContext) : base(parser)
+        public SplitHandler(
+            BlockCipherParser parser, string splitCode, string[] codeContext) : base(parser)
         {
             CodeContext = codeContext;
 
@@ -57,20 +58,18 @@ namespace BlockCipher
             BitArray variableValue = Parser.VariableStorage[temp];
             int lenPerVariable = variableValue.Length / SplitCount;
 
-            for( int i = 0; i < SplitCount; i++)
+            for (int i = 0; i < SplitCount; i++)
             {
                 // 切割变量的key
                 string splitKey = string.Format("{0}[{1}]", temp, i);
                 // 切割的变量数值
                 BitArray splitVariable = new BitArray(lenPerVariable);
-                for( int j = 0; j < lenPerVariable; j++)
+                for (int j = 0; j < lenPerVariable; j++)
                 {
                     splitVariable[j] = variableValue[i * lenPerVariable + j];
                 }
-
+                // 注册变量
                 Parser.VariableStorage.AddVariable(splitKey, splitVariable);
-
-                //Console.WriteLine( "Split::" + i + "::" + BlockCipherUtil.BitArrayToString(splitVariable));
             }
         }
         /// <summary>
@@ -93,10 +92,7 @@ namespace BlockCipher
                 }
 
                 Parser.VariableStorage.RemoveVariable(splitKey);
-                //Console.WriteLine("Merge::Split::" + i + "::" + BlockCipherUtil.BitArrayToString(splitVariable));
             }
-
-            //Console.WriteLine("Merge::{0}", BlockCipherUtil.BitArrayToString(variableValue));
         }
 
     }

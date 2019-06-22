@@ -19,6 +19,7 @@ namespace BlockCipher
         
         protected override BitArray Calculate(int dataIndex, BitArray op)
         {
+            // 从PS库中取出置换Data
             PSData permute = Parser.PermuteSBoxStorage.Permute[dataIndex];
             BitArray result = new BitArray(permute.OutputLength);
             for (int i = 0; i < permute.Data.Length; i++)

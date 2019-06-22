@@ -55,13 +55,9 @@ namespace BlockCipher
             else if( expression[0] == 'P' || expression[0] == 'S')
             {
                 if( expression[0] == 'P')
-                {
                     handler = new PermuteHandler(this);
-                }
                 else
-                {
                     handler = new SBoxHandler(this);
-                }
             }
             else
             {

@@ -72,7 +72,6 @@ namespace BlockCipher
                         }
                     }
                 }
-
                 return result;
             }
         }

@@ -32,7 +32,6 @@ namespace BlockCipher
 
                 match = match.NextMatch();
             }
-
             return variableKey;
         }
 

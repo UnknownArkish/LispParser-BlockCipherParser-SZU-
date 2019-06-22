@@ -7,17 +7,19 @@ using System.Threading.Tasks;
 namespace BlockCipher
 {
     /// <summary>
-    /// 抽象库存类
-    /// 每个库存是一个 一维整型数组
+    /// 抽象库存类，每个库存是一个 一维整型数组
     /// </summary>
     public class BaseStorage
     {
         private PSData[] m_Storages;
-
+        public BaseStorage(PSData[] storages)
+        {
+            m_Storages = storages;
+        }
         /// <summary>
         /// 个数
         /// </summary>
-        public int Count { get; private set; }
+        public int Count => m_Storages.Length;
         /// <summary>
         /// 获取一个库存
         /// </summary>
@@ -32,12 +34,6 @@ namespace BlockCipher
                 }
                 return result;
             }
-        }
-
-        public BaseStorage(PSData[] storages)
-        {
-            Count = storages.Length;
-            m_Storages = storages;
         }
     }
 }

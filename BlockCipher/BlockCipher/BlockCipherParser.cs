@@ -129,15 +129,15 @@ namespace BlockCipher
             for( int i = 0; i < codeContext.Length; i++)
             {
                 string code = codeContext[i];
-                if (code.Contains("SPLIT"))
+                if (code.Contains("SPLIT"))                             // 交给SplitHandler处理
                 {
                     i = HandleSplitContext(code, codeContext);
                 }
-                else if (code.Contains("LOOP"))
+                else if (code.Contains("LOOP"))                         // 交给LoopHandler处理
                 {
                     i = HandleLoopContext(code, codeContext);
                 }
-                else
+                else                                                    // 交给表达式处理器处理
                 {
                     ExpressionParser.ParseExpression(code);
                 }

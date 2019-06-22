@@ -12,10 +12,10 @@ namespace BlockCipher
     /// </summary>
     public class LoopHandler : BaseHandler
     {
-        public string LoopKey { get; private set; }
-        public int LoopFrom { get; private set; }
-        public int LoopTo { get; private set; }
-        public string[] CodeContext { get; private set; }
+        public string LoopKey { get; private set; }                     // 循环变量名
+        public int LoopFrom { get; private set; }                       // 循环起始值
+        public int LoopTo { get; private set; }                         // 循环终止值
+        public string[] CodeContext { get; private set; }               // 此LoopHandler管理的代码块
         
         public LoopHandler(BlockCipherParser parser,
             string loopCode, string[] codeContext ) : base(parser)
