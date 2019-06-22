@@ -163,14 +163,6 @@ public abstract class BaseAtom : ICanRun, ICanGetResult
     }
 
     /// <summary>
-    /// 从动态运行栈中绑定一个东西
-    /// </summary>
-    protected string BindFromRuntimeStack(string toBind)
-    {
-        return Parser.RuntimeAtomStack.GetSignalValue(toBind);
-    }
-
-    /// <summary>
     /// 根据自身的Signal个数切分得到所有的参数
     /// </summary>
     protected string[] GetArgs(string list)
