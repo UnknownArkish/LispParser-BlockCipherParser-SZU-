@@ -1,6 +1,6 @@
 # LispParser-BlockCipherParser
 此仓库为本人在课程《编程语言》（深圳大学）中的第二次作业，为简单的Lisp解释器和分组加密算法解释器
-
+- 完成时间: 2018-2019第二学期（大三下学期）
 --- 
 
 ## LispParser——一个简单的Lisp语言解释器
@@ -52,4 +52,4 @@
 ---
 ## 如何使用
 - 使用Visual Studio2017（或更高版本）打开PL_HW_2.sln（VS解决方案文件），编译即可运行
-- 要求.Net Framework 4.5以上
+- 要求.Net Framework 4.5 or above
