@@ -52,4 +52,4 @@
 ---
 ## 如何使用
 - 使用Visual Studio2017（或更高版本）打开PL_HW_2.sln（VS解决方案文件），编译即可运行
-- 要求.Net Framework 4.5以上
+- 要求.Net Framework 4.5 or above
